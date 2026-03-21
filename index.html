@@ -3,193 +3,208 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hyper-Realistic 3D Masterpiece</title>
+    <title>মিনি কুইজ গেম</title>
     <style>
-        /* মূল স্টাইল */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
-            background-color: #050505; /* ডিপ ব্ল্যাক ব্যাকগ্রাউন্ড */
-            color: #ffffff;
-            font-family: 'Segoe UI', Roboto, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #e8f5e9; /* হালকা সবুজ ব্যাকগ্রাউন্ড */
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            overflow: hidden;
+            margin: 0;
         }
-
-        /* কন্টেইনার */
-        .game-container {
+        .quiz-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 500px;
             text-align: center;
-            z-index: 10;
         }
-
-        /* গ্লিচ এবং গ্রেডিয়েন্ট টাইটেল */
-        .master-title {
-            font-size: 5rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            background: linear-gradient(90deg, #ff00cc, #3333ff, #00ffcc, #ff00cc);
-            background-size: 300%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: flow 5s linear infinite;
-            letter-spacing: 5px;
-            margin-bottom: 10px;
-            filter: drop-shadow(0 0 10px rgba(255, 0, 204, 0.3));
+        h2 {
+            color: #2e7d32;
+            margin-bottom: 20px;
         }
-
-        @keyframes flow {
-            0% { background-position: 0%; }
-            100% { background-position: 300%; }
-        }
-
-        .tagline {
-            font-size: 1.5rem;
-            color: #aaa;
-            margin-bottom: 40px;
-            letter-spacing: 2px;
-        }
-
-        /* নিয়ন সবুজ বোতাম */
-        .start-btn {
-            background: transparent;
-            color: #2ecc71;
-            border: 2px solid #2ecc71;
-            padding: 18px 50px;
-            font-size: 1.4rem;
-            font-weight: bold;
-            text-transform: uppercase;
+        .btn {
+            background-color: #ffffff;
+            border: 2px solid #4caf50;
+            color: #333;
+            padding: 10px 20px;
+            margin: 10px 0;
+            width: 100%;
+            border-radius: 8px;
             cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            transition: 0.4s;
-            border-radius: 5px;
-            box-shadow: 0 0 15px rgba(46, 204, 113, 0.2);
+            font-size: 16px;
+            transition: all 0.3s ease;
         }
-
-        .start-btn:hover {
-            background: #2ecc71;
-            color: #000;
-            box-shadow: 0 0 40px rgba(46, 204, 113, 0.6);
+        .btn:hover {
+            background-color: #4caf50;
+            color: white;
         }
-
-        .start-btn:active {
-            transform: scale(0.9);
+        .btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
         }
-
-        /* লোডিং স্ক্রিন */
-        #loading-screen {
-            display: none;
+        .correct {
+            background-color: #4caf50 !important;
+            color: white !important;
+            border-color: #4caf50 !important;
         }
-
-        .loader-wrapper {
-            width: 400px;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 5px;
-            border-radius: 50px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        .wrong {
+            background-color: #f44336 !important;
+            color: white !important;
+            border-color: #f44336 !important;
         }
-
-        .progress-bar {
-            height: 20px;
-            width: 0%;
-            background: linear-gradient(90deg, #2ecc71, #a9ff00);
-            border-radius: 50px;
-            box-shadow: 0 0 20px rgba(46, 204, 113, 0.5);
-            transition: width 0.1s linear;
-        }
-
-        .counter {
-            margin-top: 15px;
-            font-size: 1.2rem;
-            font-family: 'Courier New', Courier, monospace;
-            color: #2ecc71;
-        }
-
-        /* অভিনন্দন বার্তা */
-        #victory-screen {
-            display: none;
-            animation: zoomIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        @keyframes zoomIn {
-            from { transform: scale(0); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-
-        .thanks-note {
+        #next-btn {
+            background-color: #2e7d32;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
             margin-top: 20px;
-            font-style: italic;
-            color: #00ffcc;
+            cursor: pointer;
+            font-size: 16px;
+            display: none; /* প্রথমে লুকিয়ে থাকবে */
         }
-
-        /* ব্যাকগ্রাউন্ড অ্যানিমেশন (ঐচ্ছিক) */
-        .bg-dots {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-image: radial-gradient(circle, #ffffff11 1px, transparent 1px);
-            background-size: 30px 30px;
-            z-index: 1;
+        #next-btn:hover {
+            background-color: #1b5e20;
         }
     </style>
 </head>
 <body>
 
-    <div class="bg-dots"></div>
-
-    <div id="main-menu" class="game-container">
-        <h1 class="master-title">3D MASTERPIECE</h1>
-        <p class="tagline">Ready to start the game?</p>
-        <button class="start-btn" onclick="initGame()">Start Game</button>
-    </div>
-
-    <div id="loading-screen" class="game-container">
-        <div class="loader-wrapper">
-            <div id="progress" class="progress-bar"></div>
-        </div>
-        <div id="status" class="counter">INITIALIZING: 0 / 100</div>
-    </div>
-
-    <div id="victory-screen" class="game-container">
-        <h1 class="master-title">🎉 Congratulations! 🎉</h1>
-        <p class="tagline">আপনি সফলভাবে গেমটি সম্পন্ন করেছেন!</p>
-        <p class="thanks-note">আমাদের সাথে খেলার জন্য আপনাকে অসংখ্য ধন্যবাদ, প্রিয় খেলোয়াড়।</p>
+    <div class="quiz-container">
+        <h2 id="question">প্রশ্ন এখানে লোড হবে</h2>
+        <div id="answer-buttons">
+            </div>
+        <button id="next-btn">পরবর্তী প্রশ্ন</button>
+        <div id="score-area" style="display: none; margin-top: 20px; font-size: 18px; font-weight: bold; color: #2e7d32;">
+            </div>
     </div>
 
     <script>
-        function initGame() {
-            // মেনু লুকানো
-            document.getElementById('main-menu').style.display = 'none';
-            // লোডার দেখানো
-            const loadingScreen = document.getElementById('loading-screen');
-            loadingScreen.style.display = 'block';
+        // কুইজের প্রশ্ন ও উত্তরের তালিকা
+        const questions = [
+            {
+                question: "মাশরুম চাষের জন্য কোন ধরনের পরিবেশ সবচেয়ে বেশি উপযোগী?",
+                answers: [
+                    { text: "অত্যধিক গরম ও শুষ্ক", correct: false },
+                    { text: "স্যাঁতসেঁতে ও ছায়াযুক্ত", correct: true },
+                    { text: "সরাসরি সূর্যের আলো", correct: false },
+                    { text: "বালুময় মাটি", correct: false }
+                ]
+            },
+            {
+                question: "গবাদিপশুর জন্য পুষ্টিকর ঘাস কোনটি?",
+                answers: [
+                    { text: "নেপিয়ার", correct: true },
+                    { text: "কাশফুল", correct: false },
+                    { text: "দূর্বা", correct: false },
+                    { text: "বাঁশপাতা", correct: false }
+                ]
+            },
+            {
+                question: "পুকুরে মাছ চাষের ক্ষেত্রে পানির আদর্শ রঙ কেমন হওয়া উচিত?",
+                answers: [
+                    { text: "কালো", correct: false },
+                    { text: "হালকা সবুজ বা বাদামী", correct: true },
+                    { text: "একেবারে স্বচ্ছ", correct: false },
+                    { text: "লালচে", correct: false }
+                ]
+            }
+        ];
 
-            let count = 0;
-            const progressBar = document.getElementById('progress');
-            const statusText = document.getElementById('status');
-            const victoryScreen = document.getElementById('victory-screen');
+        const questionElement = document.getElementById("question");
+        const answerButtons = document.getElementById("answer-buttons");
+        const nextButton = document.getElementById("next-btn");
+        const scoreArea = document.getElementById("score-area");
 
-            // লোডিং লজিক
-            const timer = setInterval(() => {
-                count++;
-                progressBar.style.width = count + '%';
-                statusText.innerText = `LOADING DATA: ${count} / 100`;
+        let currentQuestionIndex = 0;
+        let score = 0;
 
-                if (count >= 100) {
-                    clearInterval(timer);
-                    setTimeout(() => {
-                        loadingScreen.style.display = 'none';
-                        victoryScreen.style.display = 'block';
-                    }, 500); // ১০০ হওয়ার পর সামান্য বিরতি
-                }
-            }, 40); // লোডিং স্পিড
+        function startQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            nextButton.style.display = "none";
+            scoreArea.style.display = "none";
+            showQuestion();
         }
+
+        function showQuestion() {
+            resetState();
+            let currentQuestion = questions[currentQuestionIndex];
+            questionElement.innerText = currentQuestion.question;
+
+            currentQuestion.answers.forEach(answer => {
+                const button = document.createElement("button");
+                button.innerText = answer.text;
+                button.classList.add("btn");
+                if (answer.correct) {
+                    button.dataset.correct = answer.correct;
+                }
+                button.addEventListener("click", selectAnswer);
+                answerButtons.appendChild(button);
+            });
+        }
+
+        function resetState() {
+            nextButton.style.display = "none";
+            while (answerButtons.firstChild) {
+                answerButtons.removeChild(answerButtons.firstChild);
+            }
+        }
+
+        function selectAnswer(e) {
+            const selectedBtn = e.target;
+            const isCorrect = selectedBtn.dataset.correct === "true";
+            
+            if (isCorrect) {
+                selectedBtn.classList.add("correct");
+                score++;
+            } else {
+                selectedBtn.classList.add("wrong");
+            }
+
+            // সঠিক উত্তরটি দেখিয়ে দেওয়া এবং অন্য বাটনগুলো নিষ্ক্রিয় করা
+            Array.from(answerButtons.children).forEach(button => {
+                if (button.dataset.correct === "true") {
+                    button.classList.add("correct");
+                }
+                button.disabled = true;
+            });
+            nextButton.style.display = "inline-block";
+        }
+
+        function showScore() {
+            resetState();
+            questionElement.innerText = "কুইজ শেষ!";
+            scoreArea.style.display = "block";
+            scoreArea.innerText = `আপনার স্কোর: ${questions.length} এর মধ্যে ${score}`;
+            nextButton.innerText = "আবার খেলুন";
+            nextButton.style.display = "inline-block";
+        }
+
+        function handleNextButton() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                showQuestion();
+            } else {
+                showScore();
+            }
+        }
+
+        nextButton.addEventListener("click", () => {
+            if (currentQuestionIndex < questions.length) {
+                handleNextButton();
+            } else {
+                startQuiz();
+            }
+        });
+
+        // গেম শুরু করা
+        startQuiz();
     </script>
 </body>
 </html>
