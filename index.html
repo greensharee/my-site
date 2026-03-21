@@ -1,25 +1,383 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GreenShare Shop</title>
-    <link rel="stylesheet" href="style.css">
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Hyper-Realistic 3D Masterpiece</title>
+   <script src="https://cdn.tailwindcss.com"></script>
+   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+   <style>
+       /* Custom Animations & 3D Effects */
+       body {
+           font-family: 'Rajdhani', sans-serif;
+           background-color: #050505;
+           overflow: hidden;
+           perspective: 1000px;
+       }
+
+       .font-display {
+           font-family: 'Orbitron', sans-serif;
+       }
+
+       /* Animated Background Grid */
+       .perspective-grid {
+           position: absolute;
+           width: 200%;
+           height: 200%;
+           bottom: -50%;
+           left: -50%;
+           background-image: 
+               linear-gradient(rgba(0, 255, 255, 0.1) 1px, transparent 1px),
+               linear-gradient(90deg, rgba(0, 255, 255, 0.1) 1px, transparent 1px);
+           background-size: 50px 50px;
+           transform: rotateX(60deg);
+           animation: grid-move 20s linear infinite;
+           z-index: -1;
+           mask-image: radial-gradient(circle at center, black 0%, transparent 70%);
+       }
+
+       @keyframes grid-move {
+           0% { transform: rotateX(60deg) translateY(0); }
+           100% { transform: rotateX(60deg) translateY(50px); }
+       }
+
+       /* Gradient Text Animation */
+       .animate-gradient-text {
+           background: linear-gradient(
+               to right, 
+               #ff00cc, 
+               #3333ff, 
+               #00ccff, 
+               #ff00cc
+           );
+           background-size: 300% auto;
+           color: transparent;
+           -webkit-background-clip: text;
+           background-clip: text;
+           animation: gradient-flow 4s linear infinite;
+           filter: drop-shadow(0 0 10px rgba(255, 0, 204, 0.5));
+       }
+
+       @keyframes gradient-flow {
+           to { background-position: 300% center; }
+       }
+
+       /* 3D Card Container */
+       .card-container {
+           transform-style: preserve-3d;
+           transition: transform 0.1s ease-out;
+       }
+
+       .card-content {
+           transform: translateZ(50px);
+       }
+
+       /* Neon Glow Button */
+       .neon-btn {
+           position: relative;
+           background: linear-gradient(45deg, #00ff88, #00cc66);
+           box-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
+           transition: all 0.3s ease;
+       }
+
+       .neon-btn:hover {
+           transform: translateY(-2px);
+           box-shadow: 0 0 40px rgba(0, 255, 136, 0.6);
+       }
+
+       .neon-btn:active {
+           transform: translateY(1px);
+       }
+
+       /* Loading Bar */
+       .loader-track {
+           background: rgba(255, 255, 255, 0.1);
+           backdrop-filter: blur(5px);
+       }
+
+       .loader-fill {
+           background: linear-gradient(90deg, #00ff88, #00ccff);
+           box-shadow: 0 0 15px #00ff88;
+           transition: width 0.1s linear;
+       }
+
+       /* Glitch Effect for Completion */
+       .glitch-wrapper {
+           position: relative;
+       }
+       
+       .glitch-wrapper::before,
+       .glitch-wrapper::after {
+           content: attr(data-text);
+           position: absolute;
+           top: 0;
+           left: 0;
+           width: 100%;
+           height: 100%;
+           background: #050505;
+       }
+
+       .glitch-wrapper::before {
+           left: 2px;
+           text-shadow: -1px 0 #ff00c1;
+           clip: rect(44px, 450px, 56px, 0);
+           animation: glitch-anim 5s infinite linear alternate-reverse;
+       }
+
+       .glitch-wrapper::after {
+           left: -2px;
+           text-shadow: -1px 0 #00fff9;
+           clip: rect(44px, 450px, 56px, 0);
+           animation: glitch-anim2 5s infinite linear alternate-reverse;
+       }
+
+       @keyframes glitch-anim {
+           0% { clip: rect(30px, 9999px, 10px, 0); }
+           5% { clip: rect(80px, 9999px, 90px, 0); }
+           10% { clip: rect(10px, 9999px, 40px, 0); }
+           100% { clip: rect(50px, 9999px, 60px, 0); }
+       }
+
+       @keyframes glitch-anim2 {
+           0% { clip: rect(10px, 9999px, 80px, 0); }
+           5% { clip: rect(90px, 9999px, 10px, 0); }
+           10% { clip: rect(40px, 9999px, 20px, 0); }
+           100% { clip: rect(60px, 9999px, 50px, 0); }
+       }
+
+       /* Floating Particles */
+       .particle {
+           position: absolute;
+           background: white;
+           border-radius: 50%;
+           opacity: 0;
+           pointer-events: none;
+           animation: floatUp 1s ease-out forwards;
+       }
+
+       @keyframes floatUp {
+           0% { transform: translateY(0) scale(1); opacity: 1; }
+           100% { transform: translateY(-100px) scale(0); opacity: 0; }
+       }
+   </style>
 </head>
-<body>
-    <header>
-        <nav>
-            <h1>GS E-Shop</h1>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="login.php">Login</a></li>
-            </ul>
-        </nav>
-    </header>
+<body class="h-screen w-full flex items-center justify-center text-white relative selection:bg-pink-500 selection:text-white">
 
-    <main id="product-list">
-        </main>
+   <!-- Background Elements -->
+   <div class="perspective-grid"></div>
+   <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black pointer-events-none"></div>
 
-    <script src="script.js"></script>
+   <!-- Main 3D Card -->
+   <div id="tilt-card" class="card-container relative w-full max-w-2xl p-1 mx-4">
+       
+       <!-- Glassmorphism Border/Background -->
+       <div class="absolute inset-0 bg-gradient-to-br from-white/10 to-white/5 rounded-2xl backdrop-blur-xl border border-white/10 shadow-2xl"></div>
+       
+       <!-- Content Wrapper -->
+       <div class="card-content relative z-10 p-12 text-center flex flex-col items-center justify-center min-h-[400px]">
+           
+           <!-- Header Section -->
+           <div id="header-section" class="transition-all duration-500 transform">
+               <h1 class="font-display text-4xl md:text-6xl font-black mb-2 tracking-tighter animate-gradient-text uppercase">
+                   Hyper-Realistic<br>3D Masterpiece
+               </h1>
+               <div class="h-1 w-24 bg-gradient-to-r from-transparent via-cyan-500 to-transparent mx-auto mt-4 mb-8 opacity-70"></div>
+           </div>
+
+           <!-- Initial State: Prompt -->
+           <div id="start-section" class="transition-all duration-500">
+               <p class="text-xl md:text-2xl text-gray-300 mb-10 font-light tracking-wide">
+                   Ready to start the game?
+               </p>
+               
+               <button id="start-btn" class="neon-btn group relative px-10 py-4 rounded-full font-display font-bold text-black text-lg tracking-widest overflow-hidden">
+                   <span class="relative z-10 flex items-center gap-2">
+                       START GAME
+                       <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                       </svg>
+                   </span>
+                   <div class="absolute inset-0 bg-white/30 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+               </button>
+           </div>
+
+           <!-- Loading State (Hidden by default) -->
+           <div id="loading-section" class="hidden w-full max-w-md transition-all duration-500">
+               <div class="flex justify-between text-sm font-mono text-cyan-400 mb-2">
+                   <span>LOADING RESOURCES</span>
+                   <span id="page-counter">Page 0 / 100</span>
+               </div>
+               
+               <div class="loader-track w-full h-4 rounded-full overflow-hidden border border-white/10 relative">
+                   <div id="progress-bar" class="loader-fill h-full w-0 rounded-full relative">
+                       <div class="absolute inset-0 bg-white/20 animate-pulse"></div>
+                   </div>
+               </div>
+               
+               <div class="mt-4 flex justify-center gap-1">
+                   <div class="w-1 h-1 bg-cyan-500 rounded-full animate-bounce" style="animation-delay: 0ms"></div>
+                   <div class="w-1 h-1 bg-cyan-500 rounded-full animate-bounce" style="animation-delay: 150ms"></div>
+                   <div class="w-1 h-1 bg-cyan-500 rounded-full animate-bounce" style="animation-delay: 300ms"></div>
+               </div>
+           </div>
+
+           <!-- Success State (Hidden by default) -->
+           <div id="success-section" class="hidden transform scale-90 opacity-0 transition-all duration-700">
+               <div class="glitch-wrapper mb-6" data-text="🎉 Congratulations! 🎉">
+                   <h2 class="font-display text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 drop-shadow-lg">
+                       🎉 Congratulations! 🎉
+                   </h2>
+               </div>
+               
+               <p class="text-gray-300 text-lg md:text-xl font-light leading-relaxed max-w-lg mx-auto">
+                   Thank you for playing. <br>
+                   <span class="text-cyan-400 font-semibold">The system has been initialized successfully.</span>
+               </p>
+
+               <button onclick="location.reload()" class="mt-8 px-6 py-2 rounded border border-white/20 hover:bg-white/10 text-sm text-gray-400 transition-colors">
+                   Reset Simulation
+               </button>
+           </div>
+
+       </div>
+   </div>
+
+   <script>
+       // DOM Elements
+       const tiltCard = document.getElementById('tilt-card');
+       const startBtn = document.getElementById('start-btn');
+       const startSection = document.getElementById('start-section');
+       const headerSection = document.getElementById('header-section');
+       const loadingSection = document.getElementById('loading-section');
+       const successSection = document.getElementById('success-section');
+       const progressBar = document.getElementById('progress-bar');
+       const pageCounter = document.getElementById('page-counter');
+
+       // 3D Tilt Effect Logic
+       document.addEventListener('mousemove', (e) => {
+           if (window.innerWidth < 768) return; // Disable on mobile
+
+           const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
+           const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
+           
+           tiltCard.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+       });
+
+       // Reset tilt on mouse leave
+       document.addEventListener('mouseleave', () => {
+           tiltCard.style.transform = `rotateY(0deg) rotateX(0deg)`;
+       });
+
+       // Particle Effect Function
+       function createParticles(x, y) {
+           for (let i = 0; i < 12; i++) {
+               const particle = document.createElement('div');
+               particle.classList.add('particle');
+               
+               // Randomize size and direction
+               const size = Math.random() * 6 + 2;
+               const tx = (Math.random() - 0.5) * 100;
+               const ty = (Math.random() - 0.5) * 100;
+               
+               particle.style.width = `${size}px`;
+               particle.style.height = `${size}px`;
+               particle.style.left = `${x}px`;
+               particle.style.top = `${y}px`;
+               particle.style.background = `hsl(${Math.random() * 60 + 120}, 100%, 50%)`; // Green/Teal hues
+               
+               // Set custom properties for animation
+               particle.style.setProperty('--tx', `${tx}px`);
+               particle.style.setProperty('--ty', `${ty}px`);
+               
+               // Custom animation for each particle
+               particle.animate([
+                   { transform: `translate(0, 0) scale(1)`, opacity: 1 },
+                   { transform: `translate(${tx}px, ${ty - 100}px) scale(0)`, opacity: 0 }
+               ], {
+                   duration: 800 + Math.random() * 400,
+                   easing: 'cubic-bezier(0, .9, .57, 1)',
+               });
+
+               document.body.appendChild(particle);
+               
+               // Cleanup
+               setTimeout(() => particle.remove(), 1200);
+           }
+       }
+
+       // Game Start Logic
+       startBtn.addEventListener('click', (e) => {
+           // 1. Visual Feedback
+           const rect = startBtn.getBoundingClientRect();
+           const x = rect.left + rect.width / 2;
+           const y = rect.top + rect.height / 2;
+           createParticles(x, y);
+
+           // 2. UI Transition
+           startSection.style.opacity = '0';
+           startSection.style.transform = 'scale(0.8)';
+           
+           setTimeout(() => {
+               startSection.classList.add('hidden');
+               loadingSection.classList.remove('hidden');
+               
+               // Small delay to allow display:block to apply before opacity transition
+               requestAnimationFrame(() => {
+                   loadingSection.classList.add('opacity-100');
+               });
+               
+               simulateLoading();
+           }, 300);
+       });
+
+       // Loading Simulation Logic
+       function simulateLoading() {
+           let progress = 0;
+           const totalPages = 100;
+           
+           // Randomize loading speed for realism
+           const interval = setInterval(() => {
+               // Increment by random amount (sometimes fast, sometimes slow)
+               const increment = Math.floor(Math.random() * 3) + 1; 
+               progress += increment;
+
+               if (progress > totalPages) progress = totalPages;
+
+               // Update UI
+               progressBar.style.width = `${progress}%`;
+               pageCounter.innerText = `Page ${progress} / ${totalPages}`;
+
+               // Completion Check
+               if (progress === totalPages) {
+                   clearInterval(interval);
+                   setTimeout(showSuccess, 500);
+               }
+           }, 30 + Math.random() * 50); // Variable timing
+       }
+
+       // Success State Logic
+       function showSuccess() {
+           loadingSection.style.opacity = '0';
+           headerSection.style.opacity = '0'; // Hide main title for cleaner look or keep it
+           
+           setTimeout(() => {
+               loadingSection.classList.add('hidden');
+               headerSection.classList.add('hidden'); // Hide title to focus on congrats
+               
+               successSection.classList.remove('hidden');
+               
+               // Trigger reflow
+               void successSection.offsetWidth;
+               
+               successSection.classList.remove('scale-90', 'opacity-0');
+               successSection.classList.add('scale-100', 'opacity-100');
+               
+               // Add confetti explosion from center
+               createParticles(window.innerWidth / 2, window.innerHeight / 2);
+               createParticles(window.innerWidth / 2, window.innerHeight / 2);
+           }, 500);
+       }
+   </script>
 </body>
-</html>
+    </html>
+    
