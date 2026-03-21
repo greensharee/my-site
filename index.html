@@ -1,163 +1,195 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hyper-Realistic 3D Masterpiece</title>
     <style>
-        :root {
-            --bg-color: #0a0a0a;
-            --text-color: #ffffff;
-            --accent-green: #2ecc71;
-            --gradient: linear-gradient(45deg, #ff3366, #ff00ff, #00ffff, #ff3366);
+        /* মূল স্টাইল */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            margin: 0;
+            background-color: #050505; /* ডিপ ব্ল্যাক ব্যাকগ্রাউন্ড */
+            color: #ffffff;
+            font-family: 'Segoe UI', Roboto, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             overflow: hidden;
-            text-align: center;
         }
 
-        /* Gradient Text Animation */
-        .gradient-title {
-            font-size: 4rem;
-            font-weight: 800;
-            background: var(--gradient);
-            background-size: 300% 300%;
+        /* কন্টেইনার */
+        .game-container {
+            text-align: center;
+            z-index: 10;
+        }
+
+        /* গ্লিচ এবং গ্রেডিয়েন্ট টাইটেল */
+        .master-title {
+            font-size: 5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, #ff00cc, #3333ff, #00ffcc, #ff00cc);
+            background-size: 300%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: moveGradient 5s ease infinite;
+            animation: flow 5s linear infinite;
+            letter-spacing: 5px;
             margin-bottom: 10px;
+            filter: drop-shadow(0 0 10px rgba(255, 0, 204, 0.3));
         }
 
-        @keyframes moveGradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        @keyframes flow {
+            0% { background-position: 0%; }
+            100% { background-position: 300%; }
         }
 
-        .subtitle {
+        .tagline {
             font-size: 1.5rem;
-            opacity: 0.8;
-            margin-bottom: 30px;
+            color: #aaa;
+            margin-bottom: 40px;
+            letter-spacing: 2px;
         }
 
-        /* Button Styling & Animation */
-        .btn-start {
-            background-color: var(--accent-green);
-            color: white;
-            border: none;
-            padding: 15px 40px;
-            font-size: 1.2rem;
+        /* নিয়ন সবুজ বোতাম */
+        .start-btn {
+            background: transparent;
+            color: #2ecc71;
+            border: 2px solid #2ecc71;
+            padding: 18px 50px;
+            font-size: 1.4rem;
             font-weight: bold;
-            border-radius: 50px;
+            text-transform: uppercase;
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-            box-shadow: 0 10px 20px rgba(46, 204, 113, 0.3);
+            position: relative;
+            overflow: hidden;
+            transition: 0.4s;
+            border-radius: 5px;
+            box-shadow: 0 0 15px rgba(46, 204, 113, 0.2);
         }
 
-        .btn-start:hover {
-            transform: scale(1.05);
-            box-shadow: 0 15px 25px rgba(46, 204, 113, 0.5);
+        .start-btn:hover {
+            background: #2ecc71;
+            color: #000;
+            box-shadow: 0 0 40px rgba(46, 204, 113, 0.6);
         }
 
-        .btn-start:active {
-            transform: scale(0.95);
+        .start-btn:active {
+            transform: scale(0.9);
         }
 
-        /* Loading Container */
-        #loader-container {
+        /* লোডিং স্ক্রিন */
+        #loading-screen {
             display: none;
-            width: 300px;
-            margin: 20px auto;
+        }
+
+        .loader-wrapper {
+            width: 400px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 5px;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .progress-bar {
-            width: 100%;
-            height: 10px;
-            background: #333;
-            border-radius: 10px;
-            overflow: hidden;
-            margin-bottom: 10px;
-        }
-
-        .progress-fill {
+            height: 20px;
             width: 0%;
-            height: 100%;
-            background: var(--accent-green);
+            background: linear-gradient(90deg, #2ecc71, #a9ff00);
+            border-radius: 50px;
+            box-shadow: 0 0 20px rgba(46, 204, 113, 0.5);
             transition: width 0.1s linear;
         }
 
-        /* Success Message */
-        #congrats-message {
+        .counter {
+            margin-top: 15px;
+            font-size: 1.2rem;
+            font-family: 'Courier New', Courier, monospace;
+            color: #2ecc71;
+        }
+
+        /* অভিনন্দন বার্তা */
+        #victory-screen {
             display: none;
-            animation: fadeIn 1s ease-in-out;
+            animation: zoomIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes zoomIn {
+            from { transform: scale(0); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
         }
 
-        .hidden { display: none; }
+        .thanks-note {
+            margin-top: 20px;
+            font-style: italic;
+            color: #00ffcc;
+        }
+
+        /* ব্যাকগ্রাউন্ড অ্যানিমেশন (ঐচ্ছিক) */
+        .bg-dots {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: radial-gradient(circle, #ffffff11 1px, transparent 1px);
+            background-size: 30px 30px;
+            z-index: 1;
+        }
     </style>
 </head>
 <body>
 
-    <div id="main-ui">
-        <h1 class="gradient-title">3D MASTERPIECE</h1>
-        <p class="subtitle">Ready to start the game?</p>
-        <button class="btn-start" onclick="startGame()">Start Game</button>
+    <div class="bg-dots"></div>
+
+    <div id="main-menu" class="game-container">
+        <h1 class="master-title">3D MASTERPIECE</h1>
+        <p class="tagline">Ready to start the game?</p>
+        <button class="start-btn" onclick="initGame()">Start Game</button>
     </div>
 
-    <div id="loader-container">
-        <div class="progress-bar">
-            <div id="progress-fill" class="progress-fill"></div>
+    <div id="loading-screen" class="game-container">
+        <div class="loader-wrapper">
+            <div id="progress" class="progress-bar"></div>
         </div>
-        <p id="page-count">Loading page: 0 / 100</p>
+        <div id="status" class="counter">INITIALIZING: 0 / 100</div>
     </div>
 
-    <div id="congrats-message">
-        <h1 class="gradient-title">🎉 Congratulations! 🎉</h1>
-        <p class="subtitle">Thank you for playing, Brave Adventurer!</p>
+    <div id="victory-screen" class="game-container">
+        <h1 class="master-title">🎉 Congratulations! 🎉</h1>
+        <p class="tagline">আপনি সফলভাবে গেমটি সম্পন্ন করেছেন!</p>
+        <p class="thanks-note">আমাদের সাথে খেলার জন্য আপনাকে অসংখ্য ধন্যবাদ, প্রিয় খেলোয়াড়।</p>
     </div>
 
     <script>
-        function startGame() {
-            const mainUi = document.getElementById('main-ui');
-            const loader = document.getElementById('loader-container');
-            const fill = document.getElementById('progress-fill');
-            const countText = document.getElementById('page-count');
-            const congrats = document.getElementById('congrats-message');
+        function initGame() {
+            // মেনু লুকানো
+            document.getElementById('main-menu').style.display = 'none';
+            // লোডার দেখানো
+            const loadingScreen = document.getElementById('loading-screen');
+            loadingScreen.style.display = 'block';
 
-            // Hide Main UI
-            mainUi.style.display = 'none';
-            // Show Loader
-            loader.style.display = 'block';
+            let count = 0;
+            const progressBar = document.getElementById('progress');
+            const statusText = document.getElementById('status');
+            const victoryScreen = document.getElementById('victory-screen');
 
-            let progress = 0;
-            const totalPages = 100;
+            // লোডিং লজিক
+            const timer = setInterval(() => {
+                count++;
+                progressBar.style.width = count + '%';
+                statusText.innerText = `LOADING DATA: ${count} / 100`;
 
-            const interval = setInterval(() => {
-                progress++;
-                fill.style.width = progress + '%';
-                countText.innerText = `Loading page: ${progress} / ${totalPages}`;
-
-                if (progress >= totalPages) {
-                    clearInterval(interval);
-                    loader.style.display = 'none';
-                    congrats.style.display = 'block';
+                if (count >= 100) {
+                    clearInterval(timer);
+                    setTimeout(() => {
+                        loadingScreen.style.display = 'none';
+                        victoryScreen.style.display = 'block';
+                    }, 500); // ১০০ হওয়ার পর সামান্য বিরতি
                 }
-            }, 30); // Speed of loading
+            }, 40); // লোডিং স্পিড
         }
     </script>
-
 </body>
 </html>
