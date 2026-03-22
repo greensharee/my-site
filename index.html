@@ -1,210 +1,60 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>মিনি কুইজ গেম</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #e8f5e9; /* হালকা সবুজ ব্যাকগ্রাউন্ড */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .quiz-container {
-            background-color: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            width: 100%;
-            max-width: 500px;
-            text-align: center;
-        }
-        h2 {
-            color: #2e7d32;
-            margin-bottom: 20px;
-        }
-        .btn {
-            background-color: #ffffff;
-            border: 2px solid #4caf50;
-            color: #333;
-            padding: 10px 20px;
-            margin: 10px 0;
-            width: 100%;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: all 0.3s ease;
-        }
-        .btn:hover {
-            background-color: #4caf50;
-            color: white;
-        }
-        .btn:disabled {
-            cursor: not-allowed;
-            opacity: 0.7;
-        }
-        .correct {
-            background-color: #4caf50 !important;
-            color: white !important;
-            border-color: #4caf50 !important;
-        }
-        .wrong {
-            background-color: #f44336 !important;
-            color: white !important;
-            border-color: #f44336 !important;
-        }
-        #next-btn {
-            background-color: #2e7d32;
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 8px;
-            margin-top: 20px;
-            cursor: pointer;
-            font-size: 16px;
-            display: none; /* প্রথমে লুকিয়ে থাকবে */
-        }
-        #next-btn:hover {
-            background-color: #1b5e20;
-        }
-    </style>
+    <title>Professional Home Page</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <div class="quiz-container">
-        <h2 id="question">প্রশ্ন এখানে লোড হবে</h2>
-        <div id="answer-buttons">
+    <nav class="navbar">
+        <div class="container">
+            <h1 class="logo">Brand<span>Name</span></h1>
+            <ul class="nav-links">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#" class="btn-primary">Get Started</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="container">
+            <h1>Design Your Future with Precision</h1>
+            <p>We provide high-end solutions for modern businesses looking to scale their digital footprint.</p>
+            <div class="hero-btns">
+                <a href="#" class="btn-primary">View Projects</a>
+                <a href="#" class="btn-secondary">Contact Us</a>
             </div>
-        <button id="next-btn">পরবর্তী প্রশ্ন</button>
-        <div id="score-area" style="display: none; margin-top: 20px; font-size: 18px; font-weight: bold; color: #2e7d32;">
+        </div>
+    </header>
+
+    <section class="features">
+        <div class="container">
+            <h2>Our Core Expertise</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>Strategy</h3>
+                    <p>Tailored roadmaps to ensure your business hits its quarterly targets.</p>
+                </div>
+                <div class="card">
+                    <h3>Design</h3>
+                    <p>Modern UI/UX principles that prioritize user retention and clarity.</p>
+                </div>
+                <div class="card">
+                    <h3>Growth</h3>
+                    <p>Scalable infrastructure built to handle your expanding user base.</p>
+                </div>
             </div>
-    </div>
+        </div>
+    </section>
 
-    <script>
-        // কুইজের প্রশ্ন ও উত্তরের তালিকা
-        const questions = [
-            {
-                question: "মাশরুম চাষের জন্য কোন ধরনের পরিবেশ সবচেয়ে বেশি উপযোগী?",
-                answers: [
-                    { text: "অত্যধিক গরম ও শুষ্ক", correct: false },
-                    { text: "স্যাঁতসেঁতে ও ছায়াযুক্ত", correct: true },
-                    { text: "সরাসরি সূর্যের আলো", correct: false },
-                    { text: "বালুময় মাটি", correct: false }
-                ]
-            },
-            {
-                question: "গবাদিপশুর জন্য পুষ্টিকর ঘাস কোনটি?",
-                answers: [
-                    { text: "নেপিয়ার", correct: true },
-                    { text: "কাশফুল", correct: false },
-                    { text: "দূর্বা", correct: false },
-                    { text: "বাঁশপাতা", correct: false }
-                ]
-            },
-            {
-                question: "পুকুরে মাছ চাষের ক্ষেত্রে পানির আদর্শ রঙ কেমন হওয়া উচিত?",
-                answers: [
-                    { text: "কালো", correct: false },
-                    { text: "হালকা সবুজ বা বাদামী", correct: true },
-                    { text: "একেবারে স্বচ্ছ", correct: false },
-                    { text: "লালচে", correct: false }
-                ]
-            }
-        ];
+    <footer>
+        <p>&copy; 2026 BrandName. All rights reserved.</p>
+    </footer>
 
-        const questionElement = document.getElementById("question");
-        const answerButtons = document.getElementById("answer-buttons");
-        const nextButton = document.getElementById("next-btn");
-        const scoreArea = document.getElementById("score-area");
-
-        let currentQuestionIndex = 0;
-        let score = 0;
-
-        function startQuiz() {
-            currentQuestionIndex = 0;
-            score = 0;
-            nextButton.style.display = "none";
-            scoreArea.style.display = "none";
-            showQuestion();
-        }
-
-        function showQuestion() {
-            resetState();
-            let currentQuestion = questions[currentQuestionIndex];
-            questionElement.innerText = currentQuestion.question;
-
-            currentQuestion.answers.forEach(answer => {
-                const button = document.createElement("button");
-                button.innerText = answer.text;
-                button.classList.add("btn");
-                if (answer.correct) {
-                    button.dataset.correct = answer.correct;
-                }
-                button.addEventListener("click", selectAnswer);
-                answerButtons.appendChild(button);
-            });
-        }
-
-        function resetState() {
-            nextButton.style.display = "none";
-            while (answerButtons.firstChild) {
-                answerButtons.removeChild(answerButtons.firstChild);
-            }
-        }
-
-        function selectAnswer(e) {
-            const selectedBtn = e.target;
-            const isCorrect = selectedBtn.dataset.correct === "true";
-            
-            if (isCorrect) {
-                selectedBtn.classList.add("correct");
-                score++;
-            } else {
-                selectedBtn.classList.add("wrong");
-            }
-
-            // সঠিক উত্তরটি দেখিয়ে দেওয়া এবং অন্য বাটনগুলো নিষ্ক্রিয় করা
-            Array.from(answerButtons.children).forEach(button => {
-                if (button.dataset.correct === "true") {
-                    button.classList.add("correct");
-                }
-                button.disabled = true;
-            });
-            nextButton.style.display = "inline-block";
-        }
-
-        function showScore() {
-            resetState();
-            questionElement.innerText = "কুইজ শেষ!";
-            scoreArea.style.display = "block";
-            scoreArea.innerText = `আপনার স্কোর: ${questions.length} এর মধ্যে ${score}`;
-            nextButton.innerText = "আবার খেলুন";
-            nextButton.style.display = "inline-block";
-        }
-
-        function handleNextButton() {
-            currentQuestionIndex++;
-            if (currentQuestionIndex < questions.length) {
-                showQuestion();
-            } else {
-                showScore();
-            }
-        }
-
-        nextButton.addEventListener("click", () => {
-            if (currentQuestionIndex < questions.length) {
-                handleNextButton();
-            } else {
-                startQuiz();
-            }
-        });
-
-        // গেম শুরু করা
-        startQuiz();
-    </script>
 </body>
 </html>
